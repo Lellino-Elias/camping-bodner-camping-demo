@@ -12,7 +12,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-line bg-bg2">
-      <div className="mx-auto max-w-[1320px] px-5 py-[var(--section-y)] md:px-8">
+      <div className="mx-auto max-w-[1320px] px-5 py-16 md:px-8 md:py-20">
         <div className="grid gap-9 md:gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand + contact */}
           <div>

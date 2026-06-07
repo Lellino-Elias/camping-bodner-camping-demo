@@ -8,7 +8,7 @@ export default function Kinder() {
   const lead = features[0];
 
   return (
-    <section id="kinder" className="scroll-mt-24 py-[var(--section-y)]">
+    <section id="kinder" className="scroll-mt-24 py-16 md:py-32">
       <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-5 md:px-8 lg:grid-cols-2 lg:gap-16">
         {/* Lead image */}
         <Reveal>
@@ -26,7 +26,7 @@ export default function Kinder() {
         {/* Text + feature list */}
         <div>
           <Reveal>
-            <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.08] md:leading-[1.02] tracking-tight text-ink">
+            <h2 className="font-display text-[clamp(1.75rem,6vw,3.6rem)] font-extrabold leading-[1.08] md:leading-[1.02] tracking-tight text-ink">
               {heading}
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">{intro}</p>

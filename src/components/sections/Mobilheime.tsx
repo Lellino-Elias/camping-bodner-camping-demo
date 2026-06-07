@@ -9,12 +9,12 @@ export default function Mobilheime() {
   const { heading, intro, items } = campsite.mobilheime;
 
   return (
-    <section id="mobilheime" className="scroll-mt-24 bg-bg2 py-[var(--section-y)]">
+    <section id="mobilheime" className="scroll-mt-24 bg-bg2 py-16 md:py-32">
       <div className="mx-auto max-w-[1320px] px-5 md:px-8">
         <Reveal>
           <div className="mb-10 flex flex-wrap items-end justify-between gap-6 md:mb-16">
             <div className="max-w-2xl">
-              <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.02] tracking-tight text-ink">
+              <h2 className="font-display text-[clamp(1.75rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
                 {heading}
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted">{intro}</p>

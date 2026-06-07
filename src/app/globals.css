@@ -53,19 +53,6 @@
   --line: color-mix(in oklab, var(--ink) 14%, transparent);
 }
 
-/* ── Design-System Tokens (skill-fundiert): 4pt-Skala · EIN Section-Rhythmus · EINE H2-Skala · Maß.
-   Themen-unabhängig (Spacing/Typo ändern sich nicht je Theme). Identität (Fonts/Farben) bleibt 1:1. ── */
-:root {
-  --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
-  --sp-5: 1.5rem;  --sp-6: 2rem;   --sp-7: 3rem;     --sp-8: 4rem; --sp-9: 6rem;
-  /* EIN einheitlicher vertikaler Section-Rhythmus (~64px mobil → 112px desktop, Müllerhof-Maßstab) */
-  --section-y: clamp(4rem, 7vw, 7rem);
-  /* EINE Überschriftgröße für alle Section-H2 (~32px → 58px), geeicht auf Müllerhof */
-  --h2: clamp(2rem, 1.1rem + 3.2vw, 3.6rem);
-  /* Lesebreite */
-  --measure: 65ch;
-}
-
 html {
   background-color: var(--bg);
   -webkit-text-size-adjust: 100%;
@@ -99,14 +86,6 @@ body {
 
 .font-display { font-family: var(--font-display); }
 .font-serif { font-family: var(--font-serif); }
-
-/* Hero-Headline: längen-abhängige Größenstaffel (selbstbewusste Untergrenze, NIE winzig).
-   Kurze Claims bleiben groß; lange Claims werden eine Stufe kleiner + dürfen 2–3 ausbalancierte
-   Zeilen nutzen. Ein JS-Auto-Fit in Hero.tsx begrenzt zusätzlich auf max. 3 Zeilen (Desktop). */
-.h1-s  { font-size: clamp(2.7rem, 7.6vw, 5.4rem);  line-height: 1.05; }
-.h1-m  { font-size: clamp(2.5rem, 6.4vw, 4.7rem);  line-height: 1.08; }
-.h1-l  { font-size: clamp(2.4rem, 5.4vw, 3.95rem); line-height: 1.12; }
-.h1-xl { font-size: clamp(2.3rem, 4.8vw, 3.5rem);  line-height: 1.14; }
 
 .emph {
   font-family: var(--font-serif);
