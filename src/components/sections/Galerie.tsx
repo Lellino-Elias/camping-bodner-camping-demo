@@ -16,12 +16,12 @@ export default function Galerie() {
   const [hBefore, hAfter] = hasEmph ? gal.heading.split(gal.headingEmphasis) : [gal.heading, ""];
 
   return (
-    <section id="galerie" className="scroll-mt-24 bg-bg2 py-24 md:py-32">
+    <section id="galerie" className="scroll-mt-24 bg-bg2 py-[var(--section-y)]">
       <div className="mx-auto max-w-[1320px] px-5 md:px-8">
         <Reveal>
           <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-[34ch]">
-              <h2 className="font-display text-[clamp(2.4rem,4vw,3.5rem)] font-extrabold leading-[1.0] tracking-tight text-ink">
+              <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.0] tracking-tight text-ink">
                 {hBefore}
                 {hasEmph && <span className="font-serif italic font-normal text-gold">{gal.headingEmphasis}</span>}
                 {hAfter}

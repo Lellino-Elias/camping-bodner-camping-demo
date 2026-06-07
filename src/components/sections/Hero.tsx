@@ -17,6 +17,34 @@ export default function Hero() {
   const [before, after] = hasEmphasis ? claim.split(claimEmphasis) : [claim, ""];
   const hero = campsite.hero.aerial;
 
+  // Hero-Headline: längen-abhängige Größenstufe (kurz → groß, lang → eine Stufe kleiner, nie winzig)
+  const claimLen = claim.length;
+  const heroTier = claimLen <= 42 ? "h1-s" : claimLen <= 62 ? "h1-m" : claimLen <= 82 ? "h1-l" : "h1-xl";
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+
+  // Auto-Fit: schrumpft die Headline nur so weit, dass sie max. 3 Zeilen (Desktop) / 4 (Mobil) belegt,
+  // mit selbstbewusster Untergrenze (40px / 26px). Läuft unabhängig von prefers-reduced-motion.
+  useEffect(() => {
+    const el = h1Ref.current;
+    if (!el) return;
+    const fit = () => {
+      el.style.fontSize = "";
+      const mobile = window.innerWidth < 768;
+      const maxLines = mobile ? 4 : 3;
+      const floor = mobile ? 26 : 40;
+      const lh = () => parseFloat(getComputedStyle(el).lineHeight) || parseFloat(getComputedStyle(el).fontSize) * 1.1;
+      let guard = 0;
+      while (el.scrollHeight > lh() * maxLines + 2 && parseFloat(getComputedStyle(el).fontSize) > floor && guard < 80) {
+        el.style.fontSize = parseFloat(getComputedStyle(el).fontSize) - 1 + "px";
+        guard++;
+      }
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    else fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [claim]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -47,7 +75,8 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 mx-auto flex h-full max-w-[1320px] flex-col items-center justify-center px-5 text-center md:px-8">
         <h1
-          className="font-display mx-auto max-w-4xl text-[clamp(2rem,9vw,5.5rem)] font-extrabold leading-[1.04] md:leading-[0.98] tracking-tight text-white [text-wrap:balance]"
+          ref={h1Ref}
+          className={`font-display mx-auto max-w-[52rem] ${heroTier} font-extrabold tracking-tight text-white [text-wrap:balance]`}
           style={{ textShadow: "0 2px 30px rgba(0,0,0,0.4)" }}
         >
           {before}

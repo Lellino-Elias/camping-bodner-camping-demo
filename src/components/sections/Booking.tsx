@@ -61,9 +61,9 @@ export default function Booking() {
           <div className="tl-glow" style={{ width: "44rem", height: "44rem", left: "-12%", top: "-30%", background: "radial-gradient(circle, color-mix(in oklab, var(--gold) 48%, transparent), transparent 70%)" }} />
           <div className="tl-glow" style={{ width: "40rem", height: "40rem", right: "-14%", bottom: "-34%", background: "radial-gradient(circle, color-mix(in oklab, var(--lake) 32%, transparent), transparent 70%)" }} />
         </div>
-        <div className="relative mx-auto max-w-3xl px-5 pt-20 text-center md:px-8 md:pt-28">
+        <div className="relative mx-auto max-w-3xl px-5 pt-[var(--section-y)] text-center md:px-8">
           <Reveal>
-            <h2 className="font-display text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-ink">
+            <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.05] tracking-tight text-ink">
               Bereit für deinen <span className="font-serif italic font-normal text-gold">eigenen</span> Urlaub?
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">{intro}</p>
@@ -73,7 +73,7 @@ export default function Booking() {
       </div>
 
       {/* Widget */}
-      <div id="booking-widget" className="mx-auto max-w-[1320px] scroll-mt-24 px-5 pb-24 pt-12 md:px-8 md:pb-32 md:pt-16">
+      <div id="booking-widget" className="mx-auto max-w-[1320px] scroll-mt-24 px-5 pb-[var(--section-y)] pt-[var(--sp-7)] md:px-8">
         <div className="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
           {/* Widget */}
           <Reveal>

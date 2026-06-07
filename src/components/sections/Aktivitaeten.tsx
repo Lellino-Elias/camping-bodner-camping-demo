@@ -53,12 +53,12 @@ export default function Aktivitaeten() {
 
   return (
     <section ref={sectionRef} id="aktivitaeten" className="relative overflow-hidden">
-      <div className="flex flex-col py-16 md:py-24 lg:min-h-screen lg:justify-center lg:py-0">
+      <div className="flex flex-col py-[var(--section-y)] lg:min-h-screen lg:justify-center lg:py-0">
         <div className="mx-auto w-full max-w-[1320px] px-5 md:px-8">
           <Reveal>
             <div className="mb-10 flex flex-wrap items-end justify-between gap-4 md:mb-12">
               <div className="max-w-2xl">
-                <h2 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
+                <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.02] tracking-tight text-ink">
                   {heading}
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-muted">{intro}</p>

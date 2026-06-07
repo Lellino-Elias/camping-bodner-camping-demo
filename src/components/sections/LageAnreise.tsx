@@ -15,7 +15,7 @@ export default function LageAnreise() {
   const name = campsite.name;
 
   return (
-    <section id="anreise" className="scroll-mt-24 py-16 md:py-24 lg:py-32">
+    <section id="anreise" className="scroll-mt-24 py-[var(--section-y)]">
       <div className="mx-auto grid max-w-[1320px] items-stretch gap-8 px-5 md:px-8 lg:grid-cols-2 lg:gap-12">
         {/* Map (or, without coords, an address-only card) */}
         <Reveal>
@@ -48,7 +48,7 @@ export default function LageAnreise() {
         {/* Anreise modes */}
         <div className="flex flex-col justify-center">
           <Reveal>
-            <h2 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
+            <h2 className="font-display text-[var(--h2)] font-extrabold leading-[1.02] tracking-tight text-ink">
               {heading}
             </h2>
           </Reveal>

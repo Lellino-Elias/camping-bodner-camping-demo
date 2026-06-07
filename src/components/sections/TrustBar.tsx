@@ -9,7 +9,7 @@ export default function TrustBar() {
   const awards = campsite.awards.filter((a) => a.image);
 
   return (
-    <section className="relative overflow-hidden border-y border-line bg-bg2 px-5 py-16 md:px-8 md:py-28">
+    <section className="relative overflow-hidden border-y border-line bg-bg2 px-5 py-[var(--section-y)] md:px-8">
       {/* faint warm/lake wash */}
       <div
         aria-hidden
@@ -22,7 +22,7 @@ export default function TrustBar() {
 
       <div className="relative mx-auto max-w-[1080px] text-center">
         <Reveal>
-          <h2 className="font-display mx-auto max-w-[20ch] text-[clamp(1.85rem,7vw,3.05rem)] font-extrabold leading-[1.08] md:leading-[1.03] tracking-tight text-ink">
+          <h2 className="font-display mx-auto max-w-[20ch] text-[var(--h2)] font-extrabold leading-[1.08] md:leading-[1.03] tracking-tight text-ink">
             {hBefore}
             {hasEmph && <span className="font-serif italic font-normal text-gold">{headingEmphasis}</span>}
             {hAfter}
