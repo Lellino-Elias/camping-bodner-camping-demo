@@ -39,7 +39,14 @@ export type BookingCategory = {
   perExtraGuest?: number;
 };
 
-export type StoryChapter = { no: string; kicker: string; title: string; text: string };
+export type StoryChapter = {
+  no: string;
+  kicker: string;
+  title: string;
+  text: string;
+  /** Kapitel-Bild. Nur wenn JEDES Kapitel ein Bild hat, wird die Story-Sektion gerendert. */
+  image?: ImageRef;
+};
 
 /** Hervorhebbare Headline: `emphasis` muss ein wörtlicher Teilstring von `text` sein. */
 export type EmphText = { text: string; emphasis: string };
@@ -50,6 +57,10 @@ export interface CampsiteConfig {
   slug: string;
   ort: string;
   region: string;
+  /** Kuratierte Farbwelt der Demo. Fehlt → "editorial" (heutiger Default-Look). */
+  theme?: "editorial" | "alpin" | "schiefer" | "cinematic";
+  /** Hero-Komposition: zentriert (Default) oder linksbündig. */
+  heroVariant?: "center" | "left";
   /** Untertitel der Wortmarke, z. B. "FKK-Camping", "Pension & Camping". */
   brandKind: string;
   /** Optional: See/Gewässer am Platz. Fehlt → keine "am See"-Rahmung. */
@@ -69,6 +80,9 @@ export interface CampsiteConfig {
   awards: { label: string; image?: ImageRef }[];
   saison: { von: string; bis: string };
   hero: { aerial: ImageRef; sunset?: ImageRef };
+  /** Optional: EIN starkes, sonst ungenutztes Querformat-Bild als Full-Bleed-Atempause
+   *  zwischen den Sektionen (+ optional eine kurze, belegte Zeile). Fehlt → keine Sektion. */
+  breather?: { image: ImageRef; line?: string };
   camping: { heading: string; intro: string; features: Feature[] };
   mobilheime?: { heading: string; intro: string; items: Accommodation[] };
   kinder?: { heading: string; intro: string; features: Feature[] };
@@ -85,6 +99,8 @@ export interface CampsiteConfig {
   };
   booking: {
     heading: string;
+    /** Optional: wörtlicher Teilstring von `heading`, der serif-kursiv hervorgehoben wird. */
+    headingEmphasis?: string;
     intro: string;
     categories: BookingCategory[];
     pricesArePlaceholder: boolean;

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { campsite } from "@/content/campsite.config";
 import { usePlaceholderToast } from "@/components/ui/Placeholder";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import Magnetic from "@/components/ui/Magnetic";
 import { eur } from "@/lib/format";
 
@@ -36,12 +37,28 @@ function nightsBetween(a: string, b: string) {
   return Math.max(1, Math.round((d2 - d1) / 86400000));
 }
 
+/** ISO date `days` days from now (client-side, after mount → no hydration mismatch). */
+const isoInDays = (days: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+};
+
 export default function Booking() {
-  const { intro, categories, priceNote, highlight, pricesArePlaceholder } = campsite.booking;
+  const { heading, headingEmphasis, intro, categories, priceNote, highlight, pricesArePlaceholder } = campsite.booking;
   const notify = usePlaceholderToast();
 
-  const [arrival, setArrival] = useState("2026-07-12");
-  const [departure, setDeparture] = useState("2026-07-19");
+  // Heading aus dem Config; optionaler serif-kursiver Akzent (wörtlicher Teilstring).
+  const emphAt = headingEmphasis ? heading.indexOf(headingEmphasis) : -1;
+
+  // Demo-Daten relativ zu heute (statt hartkodiert) — gesetzt nach Mount, damit der statische
+  // Export nie veraltete Vergangenheits-Daten zeigt.
+  const [arrival, setArrival] = useState("");
+  const [departure, setDeparture] = useState("");
+  useEffect(() => {
+    setArrival(isoInDays(21));
+    setDeparture(isoInDays(28));
+  }, []);
   const [guests, setGuests] = useState(2);
   const [catId, setCatId] = useState(categories[0]?.id ?? "");
 
@@ -62,9 +79,9 @@ export default function Booking() {
           <div className="tl-glow" style={{ width: "40rem", height: "40rem", right: "-14%", bottom: "-34%", background: "radial-gradient(circle, color-mix(in oklab, var(--lake) 32%, transparent), transparent 70%)" }} />
         </div>
         <div className="relative mx-auto max-w-3xl px-5 pt-20 text-center md:px-8 md:pt-28">
-          <Reveal>
+          <Reveal soft>
             <h2 className="font-display text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-ink">
-              Bereit für deinen <span className="font-serif italic font-normal text-gold">eigenen</span> Urlaub?
+              <Words text={heading} emphasis={emphAt >= 0 ? headingEmphasis : undefined} />
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">{intro}</p>
             <div className="mx-auto mt-9 h-px w-40 bg-gold/40" />
@@ -75,9 +92,10 @@ export default function Booking() {
       {/* Widget */}
       <div id="booking-widget" className="mx-auto max-w-[1320px] scroll-mt-24 px-5 pb-24 pt-12 md:px-8 md:pb-32 md:pt-16">
         <div className="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
-          {/* Widget */}
+          {/* Widget — Double-Bezel: äußere Schale + innerer Kern (haptische Tiefe am Conversion-Moment) */}
           <Reveal>
-            <div className="rounded-[2rem] border border-line bg-surface/60 p-6 backdrop-blur-sm md:p-9">
+            <div className="h-full rounded-[2.4rem] bg-ink/[0.045] p-2 ring-1 ring-ink/10">
+            <div className="rounded-[calc(2.4rem-0.5rem)] border border-line bg-surface/80 p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.55)] md:p-9">
               {/* Inputs */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
@@ -149,25 +167,30 @@ export default function Booking() {
                   <Magnetic>
                     <button
                       onClick={() => notify("Buchungsanfrage wird per E-Mail gesendet (Demo).")}
-                      className="rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-gold-soft"
+                      className="group inline-flex items-center gap-3 rounded-full bg-gold py-2 pl-6 pr-2 text-sm font-semibold text-white transition-[background-color,transform] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-gold-soft active:scale-[0.98]"
                     >
                       Jetzt buchen
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-105">
+                        <svg width="15" height="15" viewBox="0 0 14 14"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </span>
                     </button>
                   </Magnetic>
                   <button
                     onClick={() => notify("Anfrage wird per E-Mail gesendet (Demo).")}
-                    className="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-white/5"
+                    className="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-ink transition-[border-color,background-color,transform] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-ink/40 hover:bg-white/5 active:scale-[0.98]"
                   >
                     Anfrage senden
                   </button>
                 </div>
               </div>
             </div>
+            </div>
           </Reveal>
 
-          {/* Sidebar */}
+          {/* Sidebar — gleiche Double-Bezel-Schale wie das Widget */}
           <Reveal delay={120}>
-            <div className="flex h-full flex-col gap-5 rounded-[2rem] border border-line bg-bg2 p-6 md:p-8">
+            <div className="h-full rounded-[2.4rem] bg-ink/[0.045] p-2 ring-1 ring-ink/10">
+            <div className="flex h-full flex-col gap-5 rounded-[calc(2.4rem-0.5rem)] border border-line bg-bg2 p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] md:p-8">
               <div>
                 <span className="text-xs font-semibold uppercase tracking-wider text-muted">Saison</span>
                 <p className="font-display mt-1 text-xl font-bold text-ink">
@@ -192,12 +215,15 @@ export default function Booking() {
                 <p className="text-sm font-semibold text-gold">{highlight.title}</p>
                 <p className="mt-1 text-xs text-muted">{highlight.text}</p>
               </div>
-              <a href={campsite.kontakt.telHref} className="text-sm text-ink/85 transition-colors hover:text-gold">
-                ☎ {campsite.kontakt.tel}
+              <a href={campsite.kontakt.telHref} className="flex items-center gap-2.5 text-sm text-ink/85 transition-colors hover:text-gold">
+                <svg width="15" height="15" viewBox="0 0 16 16" className="shrink-0 text-gold"><path d="M3 3.5c0 5 4.5 9.5 9.5 9.5l1.5-2.5-3-1.5-1.5 1.5C8 9.5 6.5 8 5.5 6.5L7 5 5.5 2 3 3.5Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+                {campsite.kontakt.tel}
               </a>
-              <a href={`mailto:${campsite.kontakt.mail}`} className="-mt-3 break-all text-sm text-ink/85 transition-colors hover:text-gold">
-                ✉ {campsite.kontakt.mail}
+              <a href={`mailto:${campsite.kontakt.mail}`} className="-mt-3 flex items-center gap-2.5 break-all text-sm text-ink/85 transition-colors hover:text-gold">
+                <svg width="15" height="15" viewBox="0 0 16 16" className="shrink-0 text-gold"><path d="M2 4.5h12v7H2v-7Zm0 .5 6 4.5L14 5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+                {campsite.kontakt.mail}
               </a>
+            </div>
             </div>
           </Reveal>
         </div>

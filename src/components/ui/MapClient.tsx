@@ -27,11 +27,11 @@ export default function MapClient({
       zoom={15}
       scrollWheelZoom={false}
       style={{ height: "100%", width: "100%", background: "#efe8da" }}
-      attributionControl={false}
     >
+      {/* Attribution ist Lizenzpflicht (OSM/CARTO) — nie abschalten. */}
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        // CARTO light tiles for the bright editorial theme.
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
       <Marker position={[lat, lng]} icon={pin}>
         <Popup>{label}</Popup>

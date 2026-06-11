@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import { campsite } from "@/content/campsite.config";
 
 export default function TrustBar() {
   const { heading, headingEmphasis, intro } = campsite.trust;
   const hasEmph = Boolean(headingEmphasis) && heading.includes(headingEmphasis);
-  const [hBefore, hAfter] = hasEmph ? heading.split(headingEmphasis) : [heading, ""];
   const awards = campsite.awards.filter((a) => a.image);
 
   return (
@@ -21,11 +21,9 @@ export default function TrustBar() {
       />
 
       <div className="relative mx-auto max-w-[1080px] text-center">
-        <Reveal>
+        <Reveal soft>
           <h2 className="font-display mx-auto max-w-[20ch] text-[clamp(1.85rem,7vw,3.05rem)] font-extrabold leading-[1.08] md:leading-[1.03] tracking-tight text-ink">
-            {hBefore}
-            {hasEmph && <span className="font-serif italic font-normal text-gold">{headingEmphasis}</span>}
-            {hAfter}
+            <Words text={heading} emphasis={hasEmph ? headingEmphasis : undefined} />
           </h2>
           <p className="mx-auto mt-5 max-w-[52ch] text-base leading-relaxed text-muted md:text-lg">
             {intro}

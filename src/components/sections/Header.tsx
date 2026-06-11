@@ -25,10 +25,13 @@ export default function Header() {
   }, [open]);
 
   // Over the hero image (top) → light text; once scrolled onto the light bg → ink text.
+  // NOTE: Tailwind only generates classes that appear LITERALLY in the source — never build
+  // class names like `hover:${var}` (the hover style silently doesn't exist).
   const light = !scrolled;
   const primary = light ? "text-white" : "text-ink";
   const secondary = light ? "text-white/85" : "text-ink/80";
   const subtle = light ? "text-white/70" : "text-muted";
+  const hoverPrimary = light ? "hover:text-white" : "hover:text-ink";
 
   return (
     <header
@@ -53,7 +56,7 @@ export default function Header() {
             <div key={item.label} className="group relative">
               <NavLink
                 href={item.href}
-                className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${secondary} hover:${primary}`}
+                className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${secondary} ${hoverPrimary}`}
               >
                 {item.label}
                 {item.children && (
@@ -63,7 +66,7 @@ export default function Header() {
                 )}
               </NavLink>
               {item.children && (
-                <div className="invisible absolute left-1/2 top-full w-60 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <div className="invisible absolute left-1/2 top-full w-60 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
                   <div className="overflow-hidden rounded-2xl bg-surface p-2 shadow-2xl">
                     {item.children.map((c) => (
                       <NavLink
@@ -89,7 +92,7 @@ export default function Header() {
                 key={lang}
                 onClick={() => i !== 0 && notify("Mehrsprachigkeit (EN/NL) folgt nach Auftragserteilung.")}
                 className={`rounded-md px-1.5 py-0.5 text-xs font-semibold tracking-wide transition-colors ${
-                  i === 0 ? "text-gold" : `${subtle} hover:${primary}`
+                  i === 0 ? "text-gold" : `${subtle} ${hoverPrimary}`
                 }`}
               >
                 {lang}
@@ -97,13 +100,17 @@ export default function Header() {
             ))}
           </div>
 
-          <Magnetic className="hidden sm:inline-block">
+          {/* hidden muss auf einem eigenen Wrapper liegen — Magnetic setzt selbst inline-block,
+              und in der CSS-Cascade gewinnt sonst display:inline-block über hidden */}
+          <Magnetic className="max-sm:hidden">
             <NavLink
               href="#booking"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-gold-soft"
+              className="group inline-flex items-center gap-2.5 whitespace-nowrap rounded-full bg-gold py-1.5 pl-5 pr-1.5 text-sm font-semibold text-white transition-[background-color,transform] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-gold-soft active:scale-[0.98]"
             >
               Direkt buchen
-              <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
+                <svg width="13" height="13" viewBox="0 0 14 14"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </span>
             </NavLink>
           </Magnetic>
 

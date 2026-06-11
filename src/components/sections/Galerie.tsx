@@ -1,9 +1,10 @@
 import { NavLink } from "@/components/ui/Placeholder";
 import Img from "@/components/ui/Img";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import { campsite } from "@/content/campsite.config";
 
-const tile = "group relative overflow-hidden rounded-3xl shadow-[0_18px_40px_-24px_rgba(28,35,30,0.35)]";
+const tile = "media-rise group relative overflow-hidden rounded-3xl shadow-[0_18px_40px_-24px_rgba(28,35,30,0.35)]";
 const photo = "h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.045]";
 
 export default function Galerie() {
@@ -13,18 +14,15 @@ export default function Galerie() {
   const g = gal.images;
 
   const hasEmph = Boolean(gal.headingEmphasis) && gal.heading.includes(gal.headingEmphasis);
-  const [hBefore, hAfter] = hasEmph ? gal.heading.split(gal.headingEmphasis) : [gal.heading, ""];
 
   return (
     <section id="galerie" className="scroll-mt-24 bg-bg2 py-24 md:py-32">
       <div className="mx-auto max-w-[1320px] px-5 md:px-8">
-        <Reveal>
+        <Reveal soft>
           <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-[34ch]">
               <h2 className="font-display text-[clamp(2.4rem,4vw,3.5rem)] font-extrabold leading-[1.0] tracking-tight text-ink">
-                {hBefore}
-                {hasEmph && <span className="font-serif italic font-normal text-gold">{gal.headingEmphasis}</span>}
-                {hAfter}
+                <Words text={gal.heading} emphasis={hasEmph ? gal.headingEmphasis : undefined} />
               </h2>
               <p className="mt-4 max-w-[42ch] text-base leading-relaxed text-muted md:text-lg">
                 {gal.intro}

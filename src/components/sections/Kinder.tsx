@@ -1,9 +1,10 @@
 import Img from "@/components/ui/Img";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import { campsite } from "@/content/campsite.config";
 
 export default function Kinder() {
-  if (!campsite.kinder) return null;
+  if (!campsite.kinder?.features?.length) return null;
   const { heading, intro, features } = campsite.kinder;
   const lead = features[0];
 
@@ -12,7 +13,7 @@ export default function Kinder() {
       <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-5 md:px-8 lg:grid-cols-2 lg:gap-16">
         {/* Lead image */}
         <Reveal>
-          <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem]">
+          <div className="media-rise relative aspect-[5/4] overflow-hidden rounded-[2rem]">
             <Img
               src={lead.image.src}
               alt={lead.image.alt}
@@ -25,9 +26,9 @@ export default function Kinder() {
 
         {/* Text + feature list */}
         <div>
-          <Reveal>
+          <Reveal soft>
             <h2 className="font-display text-[clamp(1.75rem,6vw,3.6rem)] font-extrabold leading-[1.08] md:leading-[1.02] tracking-tight text-ink">
-              {heading}
+              <Words text={heading} />
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">{intro}</p>
           </Reveal>
@@ -39,7 +40,7 @@ export default function Kinder() {
                   <span className="font-display mt-0.5 text-sm font-bold text-gold">0{i + 1}</span>
                   <div>
                     <h3 className="font-display text-lg font-bold text-ink">{f.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">{f.text}</p>
+                    <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted">{f.text}</p>
                   </div>
                 </div>
               </Reveal>

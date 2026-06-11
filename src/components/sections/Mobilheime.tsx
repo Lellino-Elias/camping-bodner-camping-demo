@@ -1,5 +1,6 @@
 import Img from "@/components/ui/Img";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import { NavLink } from "@/components/ui/Placeholder";
 import { campsite } from "@/content/campsite.config";
 import { eur } from "@/lib/format";
@@ -11,11 +12,11 @@ export default function Mobilheime() {
   return (
     <section id="mobilheime" className="scroll-mt-24 bg-bg2 py-16 md:py-32">
       <div className="mx-auto max-w-[1320px] px-5 md:px-8">
-        <Reveal>
+        <Reveal soft>
           <div className="mb-10 flex flex-wrap items-end justify-between gap-6 md:mb-16">
             <div className="max-w-2xl">
               <h2 className="font-display text-[clamp(1.75rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
-                {heading}
+                <Words text={heading} />
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted">{intro}</p>
             </div>
@@ -47,7 +48,7 @@ export default function Mobilheime() {
                       </span>
                     )}
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{m.text}</p>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{m.text}</p>
                   {m.features && (
                     <ul className="mt-4 flex flex-wrap gap-2">
                       {m.features.map((f) => (

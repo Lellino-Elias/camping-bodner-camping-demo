@@ -10,20 +10,31 @@ import Kinder from "@/components/sections/Kinder";
 import Aktivitaeten from "@/components/sections/Aktivitaeten";
 import LageAnreise from "@/components/sections/LageAnreise";
 import Galerie from "@/components/sections/Galerie";
+import StorySection from "@/components/sections/StorySection";
+import Breather from "@/components/sections/Breather";
 import Booking from "@/components/sections/Booking";
 import Footer from "@/components/sections/Footer";
+import { campsite } from "@/content/campsite.config";
 
-export default function CampsiteHome({ theme = "cinematic" }: { theme?: string }) {
+export default function CampsiteHome({ theme }: { theme?: string }) {
+  // Farbwelt aus dem Lead-Config (kuratierte Paletten); Prop nur als Override für Previews.
+  // Der Theme-Wrapper braucht EIGENEN bg/text (body malt immer :root=editorial) und muss den
+  // PlaceholderProvider UMSCHLIESSEN, damit auch der Toast die Theme-Tokens erbt.
+  const activeTheme = theme ?? campsite.theme ?? "editorial";
   return (
-    <PlaceholderProvider>
-      <SmoothScroll>
-        <div data-theme={theme} className="grain relative">
+    <div data-theme={activeTheme} className="grain relative min-h-svh bg-bg text-ink">
+      <PlaceholderProvider>
+        <SmoothScroll>
           <Header />
           <main>
             <Hero />
             <BrandStatement />
             <CampingFeatures />
             <TrustBar />
+            {/* Full-Bleed-Atempause (nur mit config.breather) — bricht die Container-Monotonie */}
+            <Breather />
+            {/* Story (sticky Split) rendert nur, wenn 3+ Kapitel MIT Bildern existieren */}
+            <StorySection />
             <Mobilheime />
             <Kinder />
             <LageAnreise />
@@ -32,8 +43,8 @@ export default function CampsiteHome({ theme = "cinematic" }: { theme?: string }
             <Booking />
           </main>
           <Footer />
-        </div>
-      </SmoothScroll>
-    </PlaceholderProvider>
+        </SmoothScroll>
+      </PlaceholderProvider>
+    </div>
   );
 }

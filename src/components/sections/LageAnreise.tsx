@@ -2,12 +2,26 @@
 
 import dynamic from "next/dynamic";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 import { campsite } from "@/content/campsite.config";
 
 const MapClient = dynamic(() => import("@/components/ui/MapClient"), {
   ssr: false,
   loading: () => <div className="h-full w-full animate-pulse bg-bg2" />,
 });
+
+/* Minimal-Linien-Icons, per Titel-Keyword gewählt (Auto/Bahn/Flug/Default-Pin). */
+function ModeIcon({ title }: { title: string }) {
+  const t = title.toLowerCase();
+  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (/auto|pkw|wagen|wohnmobil/.test(t))
+    return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 15.5 5.4 10c.3-1 1-1.5 2-1.5h9.2c1 0 1.7.5 2 1.5l1.4 5.5M4 15.5h16M4 15.5V18m16-2.5V18M7.5 13h.01M16.5 13h.01" {...common} /></svg>;
+  if (/bahn|zug|bus|öffi|öffentlich/.test(t))
+    return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 4.5h10c1 0 1.5.5 1.5 1.5v8c0 1-.5 1.5-1.5 1.5H7c-1 0-1.5-.5-1.5-1.5V6c0-1 .5-1.5 1.5-1.5Zm-1.5 6h13M9 18l-1.5 2M15 18l1.5 2M9 12.8h.01M15 12.8h.01" {...common} /></svg>;
+  if (/flug|flieger/.test(t))
+    return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M10.5 13.5 4 11l1.5-1.5L11 10l4.5-4.5c.6-.6 1.6-.6 2 0 .4.4.4 1.4 0 2L13 12l.5 5.5L12 19l-2.5-6.5Z" {...common} /></svg>;
+  return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 20s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Zm0-8.2a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z" {...common} /></svg>;
+}
 
 export default function LageAnreise() {
   const { heading, modes } = campsite.anreise;
@@ -45,21 +59,23 @@ export default function LageAnreise() {
           </div>
         </Reveal>
 
-        {/* Anreise modes */}
+        {/* Anreise modes — Icon-Karten (bewusst anderes Modul als die Kinder-Liste) */}
         <div className="flex flex-col justify-center">
-          <Reveal>
+          <Reveal soft>
             <h2 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
-              {heading}
+              <Words text={heading} />
             </h2>
           </Reveal>
-          <div className="mt-8 space-y-px overflow-hidden rounded-3xl border border-line bg-line">
+          <div className="mt-8 space-y-3.5">
             {modes.map((m, i) => (
               <Reveal key={m.title} delay={i * 90}>
-                <div className="flex items-start gap-4 bg-bg p-6">
-                  <span className="font-display mt-0.5 text-sm font-bold text-gold">0{i + 1}</span>
+                <div className="flex items-start gap-4 rounded-2xl border border-line bg-surface/70 p-5 shadow-[0_1px_0_rgba(255,255,255,0.55)_inset] transition-colors duration-500 hover:border-gold/40">
+                  <span className="mt-0.5 grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gold/10 text-gold">
+                    <ModeIcon title={m.title} />
+                  </span>
                   <div>
                     <h3 className="font-display text-lg font-bold text-ink">{m.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted">{m.text}</p>
+                    <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted">{m.text}</p>
                   </div>
                 </div>
               </Reveal>

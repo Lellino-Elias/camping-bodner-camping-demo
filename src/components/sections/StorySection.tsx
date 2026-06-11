@@ -2,53 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { campsite } from "@/content/campsite.config";
+import Img from "@/components/ui/Img";
 import Reveal from "@/components/ui/Reveal";
+import Words from "@/components/ui/Words";
 
-const MEDIA = [1, 2, 3, 4].map((n) => ({ src: `/story/clip${n}.mp4`, poster: `/story/clip${n}.jpg` }));
-
-function MobileVideo({ src, poster, reduce }: { src: string; poster: string; reduce: boolean }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    if (reduce) return;
-    const v = ref.current;
-    if (!v) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) v.play?.().catch(() => {});
-        else v.pause?.();
-      },
-      { threshold: 0.4 },
-    );
-    io.observe(v);
-    return () => io.disconnect();
-  }, [reduce]);
-  return (
-    <video
-      ref={ref}
-      src={src}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      preload="none"
-      className="absolute inset-0 h-full w-full object-cover"
-    />
-  );
-}
-
+/**
+ * Story — sticky Split: links scrollen die Kapitel, rechts blendet das gepinnte
+ * Kapitelbild über. Rendert NUR, wenn die Story 3+ Kapitel hat und JEDES Kapitel
+ * ein eigenes Bild mitbringt (ehrliche Degradierung: sonst keine Sektion).
+ */
 export default function StorySection() {
   const story = campsite.story;
   const [active, setActive] = useState(0);
-  const [reduce, setReduce] = useState(false);
   const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const vids = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const chapters = story?.chapters ?? [];
+  const complete = chapters.length >= 3 && chapters.every((c) => c.image?.src);
 
   useEffect(() => {
-    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
-
-  useEffect(() => {
-    if (!story) return;
+    if (!complete) return;
     const els = blockRefs.current.filter(Boolean) as HTMLDivElement[];
     if (!els.length) return;
     const io = new IntersectionObserver(
@@ -61,28 +33,18 @@ export default function StorySection() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [story]);
+  }, [complete]);
 
-  useEffect(() => {
-    if (reduce) return;
-    vids.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === active) v.play?.().catch(() => {});
-      else v.pause?.();
-    });
-  }, [active, reduce]);
-
-  if (!story) return null;
-  const chapters = story.chapters;
+  if (!story || !complete) return null;
 
   return (
     <section id="story" className="relative scroll-mt-24 py-16 md:py-32">
       {/* Intro */}
       <div className="mx-auto max-w-[1320px] px-5 md:px-8">
-        <Reveal>
+        <Reveal soft>
           <div className="mb-10 max-w-2xl md:mb-20">
             <h2 className="font-display text-[clamp(1.75rem,4.5vw,3.6rem)] font-extrabold leading-[1.02] tracking-tight text-ink">
-              {story.heading}
+              <Words text={story.heading} />
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted">{story.intro}</p>
           </div>
@@ -119,22 +81,15 @@ export default function StorySection() {
         <div>
           <div className="sticky top-0 flex h-screen items-center">
             <div className="relative aspect-square w-full overflow-hidden rounded-[2.2rem] bg-bg2 shadow-2xl ring-1 ring-black/5">
-              {MEDIA.map((m, i) => (
-                <video
-                  key={m.src}
-                  ref={(el) => {
-                    vids.current[i] = el;
-                  }}
-                  src={m.src}
-                  poster={m.poster}
-                  muted
-                  loop
-                  playsInline
-                  preload={i === 0 ? "metadata" : "none"}
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
+              {chapters.map((c, i) => (
+                <div
+                  key={c.no}
+                  className={`absolute inset-0 transition-opacity duration-700 ease-out ${
                     active === i ? "opacity-100" : "opacity-0"
                   }`}
-                />
+                >
+                  <Img src={c.image!.src} alt={c.image!.alt} fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+                </div>
               ))}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
               <div className="absolute bottom-5 left-6 flex items-center gap-2">
@@ -154,16 +109,11 @@ export default function StorySection() {
 
       {/* MOBILE — stacked cards */}
       <div className="mx-auto max-w-xl space-y-12 px-5 md:space-y-16 lg:hidden">
-        {chapters.map((c, i) => (
+        {chapters.map((c) => (
           <Reveal key={c.no}>
             <div>
               <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-bg2 shadow-xl ring-1 ring-black/5">
-                {reduce ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={MEDIA[i].poster} alt={c.title} className="absolute inset-0 h-full w-full object-cover" />
-                ) : (
-                  <MobileVideo src={MEDIA[i].src} poster={MEDIA[i].poster} reduce={reduce} />
-                )}
+                <Img src={c.image!.src} alt={c.image!.alt} fill sizes="100vw" className="object-cover" />
               </div>
               <div className="mt-5">
                 <span className="font-display text-3xl font-extrabold text-gold/40">{c.no}</span>

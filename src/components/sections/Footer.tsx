@@ -38,7 +38,7 @@ export default function Footer() {
             <ul className="space-y-0.5 text-sm">
               {campsite.nav.map((n) => (
                 <li key={n.label}>
-                  <NavLink href={n.href} className="block py-2 text-muted transition-colors hover:text-ink">{n.label}</NavLink>
+                  <NavLink href={n.href} className="inline-block py-2 text-muted transition-colors hover:text-ink"><span className="lnk">{n.label}</span></NavLink>
                 </li>
               ))}
             </ul>
@@ -50,7 +50,7 @@ export default function Footer() {
             <ul className="space-y-0.5 text-sm">
               {legal.map((l) => (
                 <li key={l.label}>
-                  <NavLink href={l.href} className="block py-2 text-muted transition-colors hover:text-ink">{l.label}</NavLink>
+                  <NavLink href={l.href} className="inline-block py-2 text-muted transition-colors hover:text-ink"><span className="lnk">{l.label}</span></NavLink>
                 </li>
               ))}
             </ul>
