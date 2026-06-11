@@ -1,172 +1,140 @@
 import type { CampsiteConfig } from "../types";
 
 /**
- * Camping Bodner — Afritz am See (Gegendtal), Kärnten.
- * Alle Texte/Fakten belegt aus camping-bodner.at (Stand-Scrape 2026-06).
+ * Campingplatz Bodner — Seestraße 27, 9542 Afritz am See, Kärnten (Gegendtal).
+ * Alle Texte/Fakten/Preise belegt aus camping-bodner.at (Stand-Scrape, verify-raw/).
  * Bilder = ausschließlich eigene Bodner-Fotos in /public/campsites/camping-bodner/.
- * EHRLICH: Platz liegt DIREKT am Afritzer See mit eigenem Seezugang (Quelle:
- * Meta-Beschreibung + Über-uns + Preise/Info "Eigener Seezugang"). Reines
- * Camping — KEINE Mobilheime/Zimmer auf der Quelle → mobilheime-Sektion entfällt.
- * Reale Preisliste 2026 vorhanden → pricesArePlaceholder=false. Koordinaten
- * stammen aus der gescrapten Kontakt-Karte (nicht erfunden). Keine belegbare
- * Auszeichnung → awards leer.
- * Nur 10 belegte Fotos → die Bento-Galerie (braucht 4) bleibt leer und blendet
- * sich ehrlich aus; die Lifestyle-Aufnahmen laufen stattdessen in der
- * Aktivitäten-Sektion. So bleibt jede sichtbare Sektion sauber gefüllt.
+ * EHRLICH:
+ *  - Liegt laut Quelle DIREKT am Afritzer See ("Eigener Seezugang", "abgegrenzter
+ *    Badebereich … im klaren Wasser des Afritzer See´s") → "am See"-Rahmung zulässig.
+ *  - Preise = REALE Tagespreise 2026 (1 Platz, 2 Erw. inkl. Kurtaxe): Vor-/Nachsaison
+ *    € 34,40, Hauptsaison € 37,40 → pricesArePlaceholder=false. Belege in REPORT.md.
+ *  - KEINE Mobilheime/Zimmer → mobilheime weggelassen. Kein Logo gescrapt → logo weggelassen.
+ *  - Keine belegbare Auszeichnung → awards leer.
+ *  - Bild-Qualitätsfix: die generischen Kleinformate "Spielplatz" (479px) und
+ *    "Skaterpark" (478px) wurden entfernt (kein passender, höher aufgelöster
+ *    Library-Ersatz vorhanden, Enrichment in needs-enrichment.txt vermerkt); die
+ *    Aktiv-Sektion führt nur das geprüfte, motivgerechte Forellen-Foto. Spielplatz,
+ *    Tischtennis & Skaterpark bleiben als Fakt im Aktiv-Intro erhalten.
  */
 const IMG = "/campsites/camping-bodner";
 
 export const campingBodner: CampsiteConfig = {
-  name: "Camping Bodner",
-  shortName: "Bodner",
+  name: "Campingplatz Bodner",
+  shortName: "Camping Bodner",
   slug: "camping-bodner",
   ort: "Afritz am See",
   region: "Kärnten",
-  brandKind: "Camping",
+  brandKind: "Camping am Afritzer See",
   see: "Afritzer See",
-  regionLong: "Gegendtal · Afritz am See · Kärnten · Österreich",
+  regionLong: "Afritzer See · Gegendtal · Kärnten",
 
-  claim: "Familiärer Campingurlaub direkt am Afritzer See",
-  claimEmphasis: "am Afritzer See",
+  claim: "Campen bei Freunden am Afritzer See",
+  claimEmphasis: "Afritzer See",
   intro:
-    "Zwischen Bergen und Seen im landschaftlich schönen Gegendtal: unser familiär geführter Campingplatz mit eigenem Seezugang am klaren Afritzer See — ein Platz für Zelt, Caravan und Wohnmobil.",
+    "Familiär geführter Campingplatz im landschaftlich schönen Gegendtal — direkt am Afritzer See mit eigenem Seezugang und abgegrenztem Badebereich. Für Zelt, Caravan und Wohnmobil, seit 2020 auch Terrassencamping auf neu errichteter Anlage.",
 
   statement: {
-    text:
-      "Campen bei Freunden — bei uns ist Urlaub familiär, naturnah und mitten im Kärntner Gegendtal.",
-    emphasis: "Campen bei Freunden",
+    text: "Zwischen Bergen und Seen im Gegendtal wird Urlaub wieder ruhig, persönlich und ganz nah am Wasser.",
+    emphasis: "ganz nah am Wasser",
   },
 
   pillars: [
     {
       title: "Direkt am Afritzer See",
-      text:
-        "Eigener Seezugang mit abgegrenztem Badebereich — Badeerlebnis im klaren Wasser des Afritzer Sees, gleich vor dem Stellplatz.",
-      image: { src: `${IMG}/see-afritzer-see.webp`, alt: "Stellplätze von Camping Bodner mit Blick über den Afritzer See und die Berge" },
+      text: "Eigener Seezugang und ein abgegrenzter Badebereich: Badeerlebnis im klaren Wasser des Afritzer Sees — direkt am Platz.",
+      image: { src: `${IMG}/seezugang-steg-see.webp`, alt: "Eigener Seezugang des Campingplatzes Bodner mit Steg am Afritzer See" },
     },
     {
-      title: "Familiäre Atmosphäre",
-      text:
-        "Ein familiär geführter Platz zwischen Bergen und Seen — ob mit Zelt, Caravan oder Wohnmobil, einen Platz bekommt bei uns jeder.",
-      image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Luftaufnahme des Campingplatzes Bodner mit Caravans am Afritzer See" },
+      title: "Campen bei Freunden",
+      text: "Ein familiär geführter Platz mit persönlicher Atmosphäre, eingebettet zwischen Bergen und Seen im landschaftlich schönen Gegendtal.",
+      image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Blick über die Stellplätze von Camping Bodner am Afritzer See" },
     },
     {
       title: "Bodner's Snack Stüberl",
-      text:
-        "Gastronomische Versorgung direkt am Platz: im Snack Stüberl gibt es in der Hauptsaison täglich frisches Gebäck und kleine Imbisse.",
-      image: { src: `${IMG}/snack-stueberl.webp`, alt: "Bodner's Snack Stüberl mit Blumenbeeten am Campingplatz" },
+      text: "Gastronomische Versorgung direkt am Platz: in der Hauptsaison jeden Tag frisches Gebäck und kleine Imbisse, dazu gratis WLAN.",
+      image: { src: `${IMG}/snack-stueberl.webp`, alt: "Bodner's Snack Stüberl am Campingplatz Bodner" },
     },
   ],
 
   usps: [
-    "Familiär geführt",
     "Direkt am Afritzer See",
-    "Eigener Seezugang & Badebereich",
+    "Eigener Seezugang & abgegrenzter Badebereich",
+    "Für Zelt, Caravan & Wohnmobil",
     "Terrassencamping seit 2020",
-    "Snack Stüberl am Platz",
+    "Snack Stüberl & gratis WLAN",
     "Hunde willkommen (Leinenpflicht)",
   ],
 
   trust: {
-    heading: "Worauf Sie sich bei Camping Bodner verlassen können",
+    heading: "Worauf Sie sich am Campingplatz Bodner verlassen können",
     headingEmphasis: "verlassen",
     intro:
-      "Ein persönlich und familiär geführter Campingplatz mit eigenem Seezugang am klaren Afritzer See, gastronomischer Versorgung direkt am Platz und allen Annehmlichkeiten für einen entspannten Campingurlaub.",
+      "Ein familiär geführter Platz direkt am Afritzer See: eigener Seezugang, gepflegte Sanitäranlagen, gratis WLAN beim Snack Stüberl und ehrliche Tagespreise — Kärntner Camping, wie es sein soll.",
   },
 
-  // Keine eindeutig belegbare Auszeichnung auf der Quelle → ehrlich leer.
+  // Keine belegbare Auszeichnung auf der Quelle → ehrlich leer (Band zeigt nur USP-Pills).
   awards: [],
 
   saison: { von: "Mai", bis: "September" },
 
   hero: {
-    aerial: { src: `${IMG}/hero-luftaufnahme-see.webp`, alt: "Luftaufnahme: Campingplatz Bodner mit Steg direkt am Afritzer See" },
+    aerial: { src: `${IMG}/hero-see-panorama.webp`, alt: "Stellplätze von Camping Bodner mit Blick über den Afritzer See und die Berge des Gegendtals" },
   },
 
   camping: {
     heading: "Camping am Afritzer See",
     intro:
-      "Ob mit Zelt, Caravan oder Wohnmobil — bei Camping Bodner bekommt jeder seinen Platz. Zwischen Bergen und Seen im Gegendtal, mit eigenem Seezugang und allem, was den Campingurlaub einfach macht.",
+      "Weite Plätze für Zelt, Caravan und Wohnmobil auf gepflegten Wiesen, ein eigener Seezugang und gastronomische Versorgung am Platz — Erholung, wie sie sein soll.",
     features: [
       {
-        title: "Platz für Zelt, Caravan & Wohnmobil",
-        text:
-          "Ob Sie mit Zelt, Caravan oder Wohnmobil anreisen — einen Platz bekommt bei uns jeder, mitten in der Kärntner Natur.",
-        image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Caravans auf der Wiese am Camping Bodner" },
+        title: "Stellplätze im Grünen",
+        text: "Ob Zelt, Caravan oder Wohnmobil — bei uns bekommt jeder einen Platz auf gepflegten Wiesen, viele mit Blick über See und Berge.",
+        image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf der Wiese am Campingplatz Bodner" },
       },
       {
         title: "Terrassencamping seit 2020",
-        text:
-          "Seit 2020 bieten wir Ihnen zusätzlich Terrassencamping auf unserer neu errichteten Anlage an.",
-        image: { src: `${IMG}/anlage-luft.webp`, alt: "Luftaufnahme der Campinganlage Bodner im Gegendtal" },
+        text: "Seit 2020 bieten wir zusätzlich Terrassencamping auf einer neu errichteten Anlage — modern angelegt, mitten in der Natur.",
+        image: { src: `${IMG}/terrassencamping-anlage.webp`, alt: "Neu errichtete Anlage mit Terrassencamping am Campingplatz Bodner" },
       },
       {
-        title: "Sanitär, WLAN & Service",
-        text:
-          "Sanitäranlagen, Waschmaschine, Kühlmöglichkeiten und freies WLAN beim Snack Stüberl gehören selbstverständlich zu unseren Leistungen.",
-        image: { src: `${IMG}/empfang-anlage.webp`, alt: "Empfang und Anlage von Camping Bodner mit Bergen im Hintergrund" },
+        title: "Sanitär, Service & WLAN",
+        text: "Gepflegte Sanitäranlagen, Waschmaschine, Kühlmöglichkeiten und gratis WLAN beim Snack Stüberl gehören selbstverständlich dazu.",
+        image: { src: `${IMG}/empfang-service.webp`, alt: "Empfang und Anlage des Campingplatzes Bodner mit Blick auf die Berge" },
       },
     ],
   },
 
-  // Keine Mobilheime/Zimmer auf der Quelle → mobilheime-Sektion bewusst entfernt.
-  // Keine eigene Kinder-Sektion (Spielplatz/Tischtennis laufen unter Aktivitäten) → entfällt.
-
   aktivitaeten: {
     heading: "Aktiv am Afritzer See",
     intro:
-      "Baden, Fischen und Wandern rund um den Afritzer See — und für die Kinder ist direkt am Platz immer etwas los.",
+      "Baden im klaren Wasser am eigenen Seezugang, eine Wanderung rund um den See oder eine Runde am kleinen Spielplatz, beim Tischtennis und Skaterpark — und mittendrin der Genuss frisch geräucherter Forellen vom Platz.",
     items: [
       {
         title: "Fischen & geräucherte Forellen",
-        text:
-          "Am Afritzer See wurden schon einige schöne Exemplare gefangen — und im Juli und August gibt es donnerstags frisch geräucherte und gegrillte Forellen.",
-        image: { src: `${IMG}/geraeucherte-forellen.webp`, alt: "Frisch geräucherte Forellen aus Bodner's Snack Stüberl" },
-      },
-      {
-        title: "Spielplatz & Tischtennis",
-        text:
-          "Kleiner Spielplatz und Tischtennis sorgen dafür, dass den Kindern direkt am Platz nicht langweilig wird.",
-        image: { src: `${IMG}/spielplatz-kinder.webp`, alt: "Kind beim Spielen im Sand am Campingplatz Bodner" },
-      },
-      {
-        title: "Skaterpark in der Umgebung",
-        text:
-          "Für Action zwischendurch: ein Skaterpark gehört zu den Freizeitmöglichkeiten rund um Afritz am See.",
-        image: { src: `${IMG}/skaterpark.webp`, alt: "Skaterpark in der Umgebung von Afritz am See" },
+        text: "Am Afritzer See erfreuen sich Fischer an schönen Exemplaren — und jeden Donnerstag im Juli und August gibt es bei uns frisch geräucherte und gegrillte Forellen.",
+        image: { src: `${IMG}/geraeucherte-forellen.webp`, alt: "Frisch geräucherte Forellen im Räucherofen am Campingplatz Bodner" },
       },
     ],
   },
 
   anreise: {
-    heading: "So finden Sie uns",
+    heading: "Anreise & Lage",
     modes: [
-      {
-        title: "Mit dem Auto",
-        text:
-          "Seestraße 27, 9542 Afritz am See. Spittal an der Drau und Villach liegen jeweils rund 25 km entfernt.",
-      },
-      {
-        title: "Alles in der Nähe",
-        text:
-          "Radenthein mit mehreren Einkaufsmöglichkeiten erreichen Sie in 15 Autominuten; Einkauf, Tankstelle, Arzt und Werkstatt liegen wenige Minuten entfernt.",
-      },
-      {
-        title: "Gut zu wissen",
-        text:
-          "Rezeption täglich von 08:00 bis 19:00 Uhr. Am Platz gilt ausschließlich Barzahlung; Hunde sind erlaubt (Leinenpflicht).",
-      },
+      { title: "Mit dem Auto", text: "Im Gegendtal bei Afritz am See — Spittal an der Drau und Villach sind rund 25 km entfernt." },
+      { title: "In der Umgebung", text: "Die kleine Stadt Radenthein mit mehreren Einkaufsmöglichkeiten ist in rund 15 Minuten mit dem Auto erreichbar." },
+      { title: "Vor Ort", text: "Einkaufsmöglichkeiten, Tankstelle, Arzt und KFZ-Werkstatt erreichen Sie in wenigen Minuten mit dem Auto." },
     ],
   },
 
-  // Nur 10 belegte Fotos — alle laufen in Hero/Pillars/Camping/Aktivitäten.
-  // Die Bento-Galerie braucht 4 eigene Bilder; ohne Dubletten bleibt sie leer
-  // und blendet sich ehrlich aus (Template-Verhalten bei < 4 Bildern).
+  // Nur 8 belegte, qualitativ ausreichende Fotos — alle in Hero/Pillars/Camping/Aktiv
+  // verwendet. Das Bento braucht 4 EIGENE Bilder ohne Dubletten; ohne Erfinden bleibt
+  // die Galerie leer und blendet sich ehrlich aus (images.length < 4 → Sektion null).
   galerie: {
-    heading: "Eindrücke von Camping Bodner",
-    headingEmphasis: "Eindrücke",
+    heading: "Eindrücke vom Afritzer See",
+    headingEmphasis: "Afritzer See",
     intro:
-      "Eindrücke vom familiär geführten Campingplatz Bodner am Afritzer See in Kärnten.",
+      "Ein paar Eindrücke vom Campingplatz Bodner am Afritzer See im Gegendtal.",
     tag: "Mai bis September",
     images: [],
   },
@@ -174,19 +142,20 @@ export const campingBodner: CampsiteConfig = {
   booking: {
     heading: "Verfügbarkeit & Anfrage",
     intro:
-      "Schreiben Sie uns Ihre Buchungswünsche — wir beantworten Ihre Anfrage so rasch wie möglich und melden uns mit Ihrer persönlichen Verfügbarkeit.",
+      "Wählen Sie Zeitraum, Saison und Personen — wir melden uns mit Ihrer persönlichen Verfügbarkeit für Camping Bodner.",
     pricesArePlaceholder: false,
     priceNote:
-      "Preise 2026: Stellplatz für 2 Erwachsene inkl. Kurtaxe pro Nacht. Vor-/Nachsaison 01.05.–30.06. & 01.–30.09. (€34,40), Hauptsaison 01.07.–31.08. (€37,40). Kinder, Jugend & Hund extra. Nur Barzahlung.",
+      "Richtpreis: 1 Stellplatz für 2 Erwachsene inkl. Kurtaxe pro Nacht (Vor-/Nachsaison € 34,40, Hauptsaison € 37,40). Kinder, Jugendliche & Hund extra; Kurtaxe € 2,70/Erw. Vor-/Nachsaison 01.05.–30.06. & 01.–30.09., Hauptsaison 01.07.–31.08. Nur Barzahlung. Mit dem Betrieb bestätigen.",
     highlight: {
-      title: "Hund in der Vorsaison gratis",
-      text:
-        "In der Vor- und Nachsaison übernachtet Ihr Hund kostenlos mit (Leinenpflicht). Bitte beachten: am Platz gilt nur Barzahlung.",
+      title: "Direkt am Afritzer See",
+      text: "Eigener Seezugang und abgegrenzter Badebereich — Baden im klaren Wasser direkt am Platz.",
     },
     categories: [
-      // Reale Preisliste Bodner 2026 (Stellplatz, 2 Erwachsene inkl. Kurtaxe pro Nacht).
-      { id: "stellplatz-neben", label: "Stellplatz · Vor-/Nachsaison", perNight: 34, perExtraGuest: 10 },
-      { id: "stellplatz-haupt", label: "Stellplatz · Hauptsaison", perNight: 37, perExtraGuest: 11 },
+      // Reale Tagespreise lt. Preise-2026-Seite: 1 Platz + 2 Erw. inkl. Kurtaxe = € 34,40
+      // (Vor-/Nachsaison) bzw. € 37,40 (Hauptsaison); perExtraGuest = Erw. + Kurtaxe
+      // (€ 7+2,70 ≈ 10 bzw. € 8+2,70 ≈ 11). Belege in REPORT.md / verify-raw.
+      { id: "stellplatz-vorsaison", label: "Stellplatz · Vor-/Nachsaison", perNight: 34, perExtraGuest: 10 },
+      { id: "stellplatz-hauptsaison", label: "Stellplatz · Hauptsaison", perNight: 37, perExtraGuest: 11 },
     ],
   },
 
@@ -196,7 +165,7 @@ export const campingBodner: CampsiteConfig = {
     mail: "office@camping-bodner.at",
     facebook: "http://www.facebook.com/camping.bodner.afritz.am.see",
     adresse: "Seestraße 27 · 9542 Afritz am See · Kärnten",
-    coords: { lat: 46.7368568, lng: 13.7686839 },
+    coords: { lat: 46.736836, lng: 13.768801 },
   },
 
   languages: ["DE"],
@@ -206,36 +175,34 @@ export const campingBodner: CampsiteConfig = {
       label: "Camping",
       href: "#camping",
       children: [
-        { label: "Zelt, Caravan & Wohnmobil", href: "#camping" },
+        { label: "Stellplätze", href: "#camping" },
         { label: "Terrassencamping", href: "#camping" },
         { label: "Sanitär & Service", href: "#camping" },
       ],
     },
     {
       label: "Am See",
-      href: "#top",
-      children: [
-        { label: "Afritzer See", href: "#top" },
-        { label: "Eigener Seezugang", href: "#top" },
-        { label: "Snack Stüberl", href: "#top" },
-      ],
-    },
-    {
-      label: "Aktiv",
       href: "#aktivitaeten",
       children: [
+        { label: "Baden & Seezugang", href: "#aktivitaeten" },
         { label: "Fischen & Forellen", href: "#aktivitaeten" },
-        { label: "Spielplatz & Tischtennis", href: "#aktivitaeten" },
-        { label: "Skaterpark", href: "#aktivitaeten" },
+        { label: "Snack Stüberl", href: "#aktivitaeten" },
       ],
     },
     {
-      label: "Preise & Lage",
+      label: "Preise",
       href: "#booking",
       children: [
-        { label: "Preise", href: "#booking" },
-        { label: "Anreise", href: "#anreise" },
-        { label: "Kontakt", href: "#anreise" },
+        { label: "Tagespreise", href: "#booking" },
+        { label: "Anfrage", href: "#booking" },
+      ],
+    },
+    {
+      label: "Anreise",
+      href: "#anreise",
+      children: [
+        { label: "Mit dem Auto", href: "#anreise" },
+        { label: "In der Umgebung", href: "#anreise" },
       ],
     },
   ],

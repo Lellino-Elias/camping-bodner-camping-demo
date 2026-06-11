@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Img from "@/components/ui/Img";
+import Words from "@/components/ui/Words";
 import { campsite } from "@/content/campsite.config";
 import { NavLink } from "@/components/ui/Placeholder";
 import Magnetic from "@/components/ui/Magnetic";
@@ -13,9 +14,20 @@ export default function Hero() {
   const mediaRef = useRef<HTMLDivElement>(null);
 
   const { claim, claimEmphasis } = campsite;
-  const hasEmphasis = Boolean(claimEmphasis) && claim.includes(claimEmphasis);
-  const [before, after] = hasEmphasis ? claim.split(claimEmphasis) : [claim, ""];
+  // indexOf statt split: verschluckt nichts, wenn die Emphasis mehrfach im Claim vorkommt.
+  const emphAt = claimEmphasis ? claim.indexOf(claimEmphasis) : -1;
+  const before = emphAt >= 0 ? claim.slice(0, emphAt) : claim;
+  const after = emphAt >= 0 ? claim.slice(emphAt + claimEmphasis.length) : "";
   const hero = campsite.hero.aerial;
+  const left = campsite.heroVariant === "left";
+  // Proportionen: langer Claim → kleinere Stufe, sonst erschlägt die Headline die Hero-Section.
+  // Literale Tailwind-Klassen (JIT scannt den Quelltext — niemals dynamisch zusammensetzen!).
+  const sizeCls =
+    claim.length >= 55
+      ? "text-[clamp(1.75rem,6.5vw,3.9rem)]"
+      : claim.length >= 39
+        ? "text-[clamp(1.9rem,7.5vw,4.6rem)]"
+        : "text-[clamp(2rem,9vw,5.5rem)]";
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -36,40 +48,48 @@ export default function Hero() {
       <div ref={mediaRef} className="absolute inset-0 z-0 will-change-transform">
         <Img src={hero.src} alt={hero.alt} fill priority sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-black/20" />
-        <div
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 72% 62% at 50% 48%, rgba(0,0,0,0.52), transparent 75%)" }}
-        />
+        {left ? (
+          // mobil deckt ein vertikaler Verlauf die volle Textbreite ab; ab md der linke Band-Scrim
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/15 md:bg-gradient-to-r md:from-black/60 md:via-black/25 md:to-transparent" />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse 72% 62% at 50% 48%, rgba(0,0,0,0.52), transparent 75%)" }}
+          />
+        )}
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex h-full max-w-[1320px] flex-col items-center justify-center px-5 text-center md:px-8">
+      {/* Content — zentriert (Default) oder linksbündig (heroVariant: "left") */}
+      <div className={`reveal reveal-soft relative z-10 mx-auto flex h-full max-w-[1320px] flex-col justify-center px-5 md:px-8 ${left ? "items-start text-left" : "items-center text-center"}`}>
         <h1
-          className="font-display mx-auto max-w-4xl text-[clamp(2rem,9vw,5.5rem)] font-extrabold leading-[1.04] md:leading-[0.98] tracking-tight text-white [text-wrap:balance]"
-          style={{ textShadow: "0 2px 30px rgba(0,0,0,0.4)" }}
+          className={`font-display ${sizeCls} font-extrabold leading-[1.04] md:leading-[0.98] tracking-tight text-white [text-wrap:balance] ${left ? "max-w-3xl" : "mx-auto max-w-4xl"}`}
+          // drop-shadow-FILTER statt text-shadow: der Filter wird NACH dem Wort-Masken-Clipping
+          // gerechnet → keine sichtbaren Schatten-Boxen mehr an den Maskenkanten (overflow:hidden
+          // schnitt den 30px-text-shadow pro Wort hart ab = die „kantigen Blöcke" hinterm Text).
+          style={{ filter: "drop-shadow(0 2px 22px rgba(0,0,0,0.45))" }}
         >
-          {before}
-          {hasEmphasis && <span className="font-serif italic font-normal text-[#e6b667]">{claimEmphasis}</span>}
-          {after}
+          <Words text={claim} emphasis={emphAt >= 0 ? claimEmphasis : undefined} emphasisClass="font-serif italic font-normal" emphasisStyle={{ color: "var(--hero-emph)" }} />
         </h1>
 
         <p
-          className="mx-auto mt-6 max-w-xl text-base text-white md:text-lg"
+          className={`mt-6 max-w-xl text-base text-white md:text-lg ${left ? "" : "mx-auto"}`}
           style={{ textShadow: "0 1px 18px rgba(0,0,0,0.6)" }}
         >
           {campsite.intro}
         </p>
 
-        <div className="mt-7 flex w-full flex-col items-stretch justify-center gap-3 sm:mt-9 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+        <div className={`mt-7 flex w-full flex-col items-stretch gap-3 sm:mt-9 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 ${left ? "justify-start" : "justify-center"}`}>
           <Magnetic className="w-full justify-center sm:w-auto">
             <NavLink
               href="#booking"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-gold-soft w-full justify-center sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-gold py-2 pl-7 pr-2 text-sm font-semibold text-white transition-[background-color,transform] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-gold-soft active:scale-[0.98] sm:w-auto"
             >
               Jetzt anfragen
-              <svg width="15" height="15" viewBox="0 0 14 14"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-105">
+                <svg width="15" height="15" viewBox="0 0 14 14"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </span>
             </NavLink>
           </Magnetic>
           <a
