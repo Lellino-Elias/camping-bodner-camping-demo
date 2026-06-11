@@ -18,7 +18,11 @@ import type { CampsiteConfig } from "../types";
  *      (gleiche Datei) entfernt um Duplikat zu vermeiden.
  *    · geraeucherte-forellen.webp (638×583, tooSmall) in aktivitaeten.items →
  *      Eintrag entfernt (optionaler Slot, kein Ersatz nach Enrichment). Forellen-
- *      Fakt bleibt im aktivitaeten.intro erhalten.
+ *      Fakt bleibt im aktivitaeten.intro erhalten (zeitlich präzisiert auf
+ *      "jeden Donnerstag im Juli und August" lt. Quelle 08.md).
+ *    · terrassencamping-anlage.webp zeigt Hofgelände/Scheune (Motiv-Mismatch,
+ *      verify2-Issue). .enriched-marker gesetzt → camping.features[1] entfernt
+ *      (optionaler Slot; Terrassencamping-Fakt bleibt in intro/usps als Text erhalten).
  *    · generische Kleinformate "Spielplatz" (479px) und "Skaterpark" (478px) wurden
  *      bereits zuvor entfernt. Spielplatz, Tischtennis & Skaterpark bleiben als
  *      Fakt im Aktiv-Intro erhalten.
@@ -98,18 +102,13 @@ export const campingBodner: CampsiteConfig = {
         text: "Ob Zelt, Caravan oder Wohnmobil — bei uns bekommt jeder einen Platz auf gepflegten Wiesen, viele mit Blick über See und Berge.",
         image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf der Wiese am Campingplatz Bodner" },
       },
-      {
-        title: "Terrassencamping seit 2020",
-        text: "Seit 2020 bieten wir zusätzlich Terrassencamping auf einer neu errichteten Anlage — modern angelegt, mitten in der Natur.",
-        image: { src: `${IMG}/terrassencamping-anlage.webp`, alt: "Neu errichtete Anlage mit Terrassencamping am Campingplatz Bodner" },
-      },
     ],
   },
 
   aktivitaeten: {
     heading: "Aktiv am Afritzer See",
     intro:
-      "Baden im klaren Wasser am eigenen Seezugang, eine Wanderung rund um den See oder eine Runde am kleinen Spielplatz, beim Tischtennis und Skaterpark — und mittendrin der Genuss frisch geräucherter Forellen vom Platz.",
+      "Baden im klaren Wasser am eigenen Seezugang, eine Wanderung rund um den See oder eine Runde am kleinen Spielplatz, beim Tischtennis und Skaterpark — und mittendrin der Genuss frisch geräucherter Forellen (jeden Donnerstag im Juli und August) vom Platz.",
     items: [],
   },
 
