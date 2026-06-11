@@ -11,11 +11,17 @@ import type { CampsiteConfig } from "../types";
  *    € 34,40, Hauptsaison € 37,40 → pricesArePlaceholder=false. Belege in REPORT.md.
  *  - KEINE Mobilheime/Zimmer → mobilheime weggelassen. Kein Logo gescrapt → logo weggelassen.
  *  - Keine belegbare Auszeichnung → awards leer.
- *  - Bild-Qualitätsfix: die generischen Kleinformate "Spielplatz" (479px) und
- *    "Skaterpark" (478px) wurden entfernt (kein passender, höher aufgelöster
- *    Library-Ersatz vorhanden, Enrichment in needs-enrichment.txt vermerkt); die
- *    Aktiv-Sektion führt nur das geprüfte, motivgerechte Forellen-Foto. Spielplatz,
- *    Tischtennis & Skaterpark bleiben als Fakt im Aktiv-Intro erhalten.
+ *  - Bild-Qualitätsfix (nach .enriched-marker, ehrliche Auflösung):
+ *    · snack-stueberl.webp (667×610, tooSmall) in Pillar 3 → ersetzt durch
+ *      empfang-service.webp (1905×647) — zeigt Bodner's Snack Stüberl mit Schild
+ *      und Empfangsgebäude; camping.features-Eintrag "Sanitär, Service & WLAN"
+ *      (gleiche Datei) entfernt um Duplikat zu vermeiden.
+ *    · geraeucherte-forellen.webp (638×583, tooSmall) in aktivitaeten.items →
+ *      Eintrag entfernt (optionaler Slot, kein Ersatz nach Enrichment). Forellen-
+ *      Fakt bleibt im aktivitaeten.intro erhalten.
+ *    · generische Kleinformate "Spielplatz" (479px) und "Skaterpark" (478px) wurden
+ *      bereits zuvor entfernt. Spielplatz, Tischtennis & Skaterpark bleiben als
+ *      Fakt im Aktiv-Intro erhalten.
  */
 const IMG = "/campsites/camping-bodner";
 
@@ -53,7 +59,7 @@ export const campingBodner: CampsiteConfig = {
     {
       title: "Bodner's Snack Stüberl",
       text: "Gastronomische Versorgung direkt am Platz: in der Hauptsaison jeden Tag frisches Gebäck und kleine Imbisse, dazu gratis WLAN.",
-      image: { src: `${IMG}/snack-stueberl.webp`, alt: "Bodner's Snack Stüberl am Campingplatz Bodner" },
+      image: { src: `${IMG}/empfang-service.webp`, alt: "Bodner's Snack Stüberl und Empfangsgebäude am Campingplatz Bodner in Afritz am See" },
     },
   ],
 
@@ -97,11 +103,6 @@ export const campingBodner: CampsiteConfig = {
         text: "Seit 2020 bieten wir zusätzlich Terrassencamping auf einer neu errichteten Anlage — modern angelegt, mitten in der Natur.",
         image: { src: `${IMG}/terrassencamping-anlage.webp`, alt: "Neu errichtete Anlage mit Terrassencamping am Campingplatz Bodner" },
       },
-      {
-        title: "Sanitär, Service & WLAN",
-        text: "Gepflegte Sanitäranlagen, Waschmaschine, Kühlmöglichkeiten und gratis WLAN beim Snack Stüberl gehören selbstverständlich dazu.",
-        image: { src: `${IMG}/empfang-service.webp`, alt: "Empfang und Anlage des Campingplatzes Bodner mit Blick auf die Berge" },
-      },
     ],
   },
 
@@ -109,13 +110,7 @@ export const campingBodner: CampsiteConfig = {
     heading: "Aktiv am Afritzer See",
     intro:
       "Baden im klaren Wasser am eigenen Seezugang, eine Wanderung rund um den See oder eine Runde am kleinen Spielplatz, beim Tischtennis und Skaterpark — und mittendrin der Genuss frisch geräucherter Forellen vom Platz.",
-    items: [
-      {
-        title: "Fischen & geräucherte Forellen",
-        text: "Am Afritzer See erfreuen sich Fischer an schönen Exemplaren — und jeden Donnerstag im Juli und August gibt es bei uns frisch geräucherte und gegrillte Forellen.",
-        image: { src: `${IMG}/geraeucherte-forellen.webp`, alt: "Frisch geräucherte Forellen im Räucherofen am Campingplatz Bodner" },
-      },
-    ],
+    items: [],
   },
 
   anreise: {
