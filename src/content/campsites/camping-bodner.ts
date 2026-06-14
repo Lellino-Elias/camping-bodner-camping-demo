@@ -58,7 +58,7 @@ export const campingBodner: CampsiteConfig = {
     {
       title: "Campen bei Freunden",
       text: "Ein familiär geführter Platz mit persönlicher Atmosphäre, eingebettet zwischen Bergen und Seen im landschaftlich schönen Gegendtal.",
-      image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Blick über die Stellplätze von Camping Bodner am Afritzer See" },
+      image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf der gepflegten Wiese am Campingplatz Bodner" },
     },
     {
       title: "Bodner's Snack Stüberl",
@@ -100,7 +100,7 @@ export const campingBodner: CampsiteConfig = {
       {
         title: "Stellplätze im Grünen",
         text: "Ob Zelt, Caravan oder Wohnmobil — bei uns bekommt jeder einen Platz auf gepflegten Wiesen, viele mit Blick über See und Berge.",
-        image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf der Wiese am Campingplatz Bodner" },
+        image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Stellplätze von Camping Bodner auf grünen Wiesen mit Blick über den Afritzer See und die Berge des Gegendtals" },
       },
     ],
   },
