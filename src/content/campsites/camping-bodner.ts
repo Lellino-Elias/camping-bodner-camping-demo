@@ -11,15 +11,23 @@ import type { CampsiteConfig } from "../types";
  *    € 34,40, Hauptsaison € 37,40 → pricesArePlaceholder=false. Belege in REPORT.md.
  *  - KEINE Mobilheime/Zimmer → mobilheime weggelassen. Kein Logo gescrapt → logo weggelassen.
  *  - Keine belegbare Auszeichnung → awards leer.
+ *  - Visueller Feinschliff (Bilder klarer/motivtreuer, nur eigene Fotos, je 1×):
+ *    · Pillar 1 "Direkt am See": trübes Top-down-Luftbild (seezugang-steg-see.webp,
+ *      dunkel) → camping-am-see-luft.webp (helles Luftbild, See klar sichtbar).
+ *    · Pillar 2 "Campen bei Freunden": stellplaetze.webp → empfang-service.webp
+ *      (sonnige Anlage/Platz-Ansicht; stellplaetze.webp wandert in die große
+ *      camping.features-Kachel, wo das beste Stellplatz-Foto am stärksten wirkt).
+ *    · Pillar 3 "Snack Stüberl": neblige Panorama-Aufnahme (empfang-service.webp)
+ *      → snack-stueberl.webp (klare Nahaufnahme des Snack-Stüberl-Gebäudes mit
+ *      Schild und Blumenbeet — motivtreuer). Datei lag bereits in /public.
+ *    · seezugang-steg-see.webp & terrassencamping-anlage.webp (Motiv-Mismatch)
+ *      nicht mehr referenziert → aus /public entfernt (keine verwaisten Dateien).
  *  - Bild-Qualitätsfix (nach .enriched-marker, ehrliche Auflösung):
- *    · snack-stueberl.webp (667×610, tooSmall) in Pillar 3 → ersetzt durch
- *      empfang-service.webp (1905×647) — zeigt Bodner's Snack Stüberl mit Schild
- *      und Empfangsgebäude; camping.features-Eintrag "Sanitär, Service & WLAN"
- *      (gleiche Datei) entfernt um Duplikat zu vermeiden.
- *    · geraeucherte-forellen.webp (638×583, tooSmall) in aktivitaeten.items →
- *      Eintrag entfernt (optionaler Slot, kein Ersatz nach Enrichment). Forellen-
- *      Fakt bleibt im aktivitaeten.intro erhalten (zeitlich präzisiert auf
- *      "jeden Donnerstag im Juli und August" lt. Quelle 08.md).
+ *    · aktivitaeten.items (zuvor leer) → 3 belegte Einträge ergänzt, je mit eigenem
+ *      Foto: Kleiner Spielplatz (spielplatz.webp), Skaterpark (skaterpark.webp,
+ *      "in der Umgebung" gerahmt), Frisch geräucherte Forellen
+ *      (geraeucherte-forellen.webp). Alle Fakten belegt (REPORT.md Z. 17–19);
+ *      kleinere Formate, aber für die Aktiv-Karten (~400px) ausreichend.
  *    · terrassencamping-anlage.webp zeigt Hofgelände/Scheune (Motiv-Mismatch,
  *      verify2-Issue). .enriched-marker gesetzt → camping.features[1] entfernt
  *      (optionaler Slot; Terrassencamping-Fakt bleibt in intro/usps als Text erhalten).
@@ -53,17 +61,17 @@ export const campingBodner: CampsiteConfig = {
     {
       title: "Direkt am Afritzer See",
       text: "Eigener Seezugang und ein abgegrenzter Badebereich: Badeerlebnis im klaren Wasser des Afritzer Sees — direkt am Platz.",
-      image: { src: `${IMG}/seezugang-steg-see.webp`, alt: "Eigener Seezugang des Campingplatzes Bodner mit Steg am Afritzer See" },
+      image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Stellplätze von Camping Bodner mit Blick über den Afritzer See und die Berge des Gegendtals" },
     },
     {
       title: "Campen bei Freunden",
       text: "Ein familiär geführter Platz mit persönlicher Atmosphäre, eingebettet zwischen Bergen und Seen im landschaftlich schönen Gegendtal.",
-      image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf der gepflegten Wiese am Campingplatz Bodner" },
+      image: { src: `${IMG}/empfang-service.webp`, alt: "Anlage des Campingplatzes Bodner mit Snack Stüberl und Bergen des Gegendtals in Afritz am See" },
     },
     {
       title: "Bodner's Snack Stüberl",
       text: "Gastronomische Versorgung direkt am Platz: in der Hauptsaison jeden Tag frisches Gebäck und kleine Imbisse, dazu gratis WLAN.",
-      image: { src: `${IMG}/empfang-service.webp`, alt: "Bodner's Snack Stüberl und Empfangsgebäude am Campingplatz Bodner in Afritz am See" },
+      image: { src: `${IMG}/snack-stueberl.webp`, alt: "Bodner's Snack Stüberl am Campingplatz Bodner in Afritz am See mit Blumenbeet" },
     },
   ],
 
@@ -100,7 +108,7 @@ export const campingBodner: CampsiteConfig = {
       {
         title: "Stellplätze im Grünen",
         text: "Ob Zelt, Caravan oder Wohnmobil — bei uns bekommt jeder einen Platz auf gepflegten Wiesen, viele mit Blick über See und Berge.",
-        image: { src: `${IMG}/camping-am-see-luft.webp`, alt: "Stellplätze von Camping Bodner auf grünen Wiesen mit Blick über den Afritzer See und die Berge des Gegendtals" },
+        image: { src: `${IMG}/stellplaetze.webp`, alt: "Stellplätze mit Wohnwagen auf den gepflegten Wiesen des Campingplatzes Bodner am Afritzer See" },
       },
     ],
   },
@@ -109,7 +117,23 @@ export const campingBodner: CampsiteConfig = {
     heading: "Aktiv am Afritzer See",
     intro:
       "Baden im klaren Wasser am eigenen Seezugang, eine Wanderung rund um den See oder eine Runde am kleinen Spielplatz, beim Tischtennis und Skaterpark — und mittendrin der Genuss frisch geräucherter Forellen (jeden Donnerstag im Juli und August) vom Platz.",
-    items: [],
+    items: [
+      {
+        title: "Kleiner Spielplatz",
+        text: "Ein kleiner Spielplatz am Platz — Platz zum Buddeln und Spielen für die jüngsten Gäste, gleich neben den Stellplätzen.",
+        image: { src: `${IMG}/spielplatz.webp`, alt: "Kind spielt im Sand am kleinen Spielplatz des Campingplatzes Bodner" },
+      },
+      {
+        title: "Skaterpark",
+        text: "In der Umgebung lädt ein Skaterpark zum Ausprobieren ein — Abwechslung für aktive Gäste rund um den Afritzer See.",
+        image: { src: `${IMG}/skaterpark.webp`, alt: "Skater auf der Rampe in einem Skaterpark in der Umgebung von Afritz am See" },
+      },
+      {
+        title: "Frisch geräucherte Forellen",
+        text: "Jeden Donnerstag im Juli und August gibt es am Platz frisch geräucherte und gegrillte Forellen — direkt vom eigenen Räucherofen.",
+        image: { src: `${IMG}/geraeucherte-forellen.webp`, alt: "Frisch geräucherte Forellen im Räucherofen am Campingplatz Bodner" },
+      },
+    ],
   },
 
   anreise: {
