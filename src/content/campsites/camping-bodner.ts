@@ -65,7 +65,7 @@ export const campingBodner: CampsiteConfig = {
     },
     {
       title: "Campen bei Freunden",
-      text: "Ein familiär geführter Platz mit persönlicher Atmosphäre, eingebettet zwischen Bergen und Seen im landschaftlich schönen Gegendtal.",
+      text: "Ein familiär geführter Platz mit persönlicher Atmosphäre zwischen Bergen und Seen im Gegendtal.",
       image: { src: `${IMG}/empfang-service.webp`, alt: "Anlage des Campingplatzes Bodner mit Snack Stüberl und Bergen des Gegendtals in Afritz am See" },
     },
     {
